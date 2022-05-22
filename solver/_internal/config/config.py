@@ -7,6 +7,23 @@ from _internal.log.log import set_level
 
 logger = log.logger()
 
+
+# These options are required in the assignment specification.
+config_option_mode_breadth_first = 'B'
+config_option_mode_iterative_deepening = 'I'
+config_option_mode_uniform_cost = 'U'
+config_option_mode_astar = 'A'
+config_option_mode_greedy = 'G'
+config_option_mode_hill_climbing = 'H'
+valid_modes = [config_option_mode_breadth_first,
+               config_option_mode_iterative_deepening,
+               config_option_mode_uniform_cost,
+               config_option_mode_astar,
+               config_option_mode_greedy,
+               config_option_mode_hill_climbing,
+]
+config_option_print_result = "PRINT"
+
 class InvalidConfigError(Exception):
     def __init__(self, config_option_key, err_msg):
         super().__init__(
@@ -60,22 +77,6 @@ def initialize_log_level(log_level_config_key, log_level):
         raise InvalidConfigError(log_level_config_key, e)
 
 def parse_config(args):
-    # These options are required in the assignment specification.
-    config_option_mode_breadth_first = 'B'
-    config_option_mode_iterative_deepening = 'I'
-    config_option_mode_uniform_cost = 'U'
-    config_option_mode_astar = 'A'
-    config_option_mode_greedy = 'G'
-    config_option_mode_hill_climbing = 'H'
-    valid_modes = [config_option_mode_breadth_first,
-             config_option_mode_iterative_deepening,
-             config_option_mode_uniform_cost,
-             config_option_mode_astar,
-             config_option_mode_greedy,
-             config_option_mode_hill_climbing,
-    ]
-    config_option_print_result = "PRINT"
-
     # These are NOT required in the assignment specification.
     config_option_debug = '-d'
     config_option_log_level = '-log-level'

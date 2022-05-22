@@ -1,4 +1,6 @@
 from contextlib import contextmanager
+from copy import copy
+from math import sqrt
 import os
 import sys
 
@@ -24,6 +26,9 @@ def list_mutation(l, from_pos, to_pos):
     l[to_pos] = l[from_pos]
     l[from_pos] = temp
     return l
+
+def slen(l):
+    return int(sqrt(len(l)))
 
 @contextmanager
 def suppress_output():

@@ -1,9 +1,24 @@
 from datetime import datetime
 
-from _internal.explorer.explorer import Explorer
+from _internal.config.config import (config_option_mode_breadth_first,
+                                     config_option_mode_iterative_deepening,
+                                     config_option_mode_uniform_cost,
+                                     config_option_mode_astar,
+                                     config_option_mode_greedy,
+                                     config_option_mode_hill_climbing)
+from _internal.policies.bfs import bfs
 from _internal.log import log
 
 logger = log.logger()
+
+mode_to_policy = {
+    config_option_mode_breadth_first: bfs,
+    config_option_mode_iterative_deepening: None,
+    config_option_mode_uniform_cost: None,
+    config_option_mode_astar: None,
+    config_option_mode_greedy: None,
+    config_option_mode_hill_climbing: None,
+}
 
 class Solver:
     def __init__(self, config):
@@ -20,27 +35,18 @@ class Solver:
         logger.info(f"Elapsed time: {elapsed}")
 
     def run(self):
-        # BFS
-        #
-        # TODO: how to keep track of the steps we are taking?
-        goal_state = [1,2,3,4,5,6,7,8,0]
-        frontier = [self._puzzle_entries]
-        explored = []
-        found_goal = False
-        while len(frontier) > 0 and not found_goal:
-            state = frontier.pop()
-            logger.debug(f"Exploring state {state}")
-            if state in explored:
-                continue
-            else:
-                explored.append(state)
-            if state == goal_state:
-                found_goal = True
-            explorer = Explorer(state)
-            next_states = explorer.branch()
-            frontier.extend(next_states)
+        initial_state = self._puzzle_entries
+        goal_state = self._get_goal()
 
-        if found_goal:
-            print("Found goal")
-        else:
-            print("Did not find goal")
+        mode = self._config.mode
+        policy = mode_to_policy[mode]
+
+        policy(initial_state, goal_state)
+
+    def _get_goal(self):
+        goal = []
+        for i in range(1, len(self._puzzle_entries)):
+            goal.append(i)
+        # 0 is the empty slot in the puzzle
+        goal.append(0)
+        return goal

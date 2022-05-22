@@ -1,14 +1,12 @@
-from copy import copy
-from math import sqrt
-
 from .move import Move
 from ..utils.utils import list_mutation
+from ..utils.utils import slen
 
 class Explorer:
     def __init__(self, puzzle):
         self._puzzle = puzzle
         self._puzzle_len = len(puzzle)
-        self._puzzle_slen = int(sqrt(len(puzzle)))
+        self._puzzle_slen = slen(puzzle)
 
     def branch(self):
         valid_moves = self._all_valid_moves(self._puzzle.index(0))
