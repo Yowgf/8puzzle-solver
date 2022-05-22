@@ -54,17 +54,31 @@ class Node:
             raise RuntimeError("Nodeid passed to Node.path_to is really weird! "+
                                f"nodeid={nodeid} path={path}")
 
+    # Print in DFS approach
+    def print(self, s):
+        s += str(self.data)
+        if self.left_child != None or self.right_child != None:
+            s += "\n"
+        if self.left_child != None:
+            s += " l " + self.left_child.print("")
+        if self.right_child != None:
+            s += " r " + self.right_child.print("")
+        return s
+
 # BST is a binary search tree.
 class BST:
-    def __init__(self, root):
-        self._root = root
-        self._size = 1
+    def __init__(self):
+        self._root = None
+        self._size = 0
 
     def insert(self, nodeid, data):
         logger.debug(f"Inserting node in BST. "+
                      f"nodeid={nodeid}. Current size: {self._size}")
-        self._root.insert(nodeid, data)
-        logger.debug(f"Inserted. L={self._root.left_child} R={self._root.right_child}")
+        if self._root == None:
+            self._root = Node(nodeid, None, None, data)
+        else:
+            self._root.insert(nodeid, data)
+        logger.debug(f"Inserted. Tree:\n{self.print()}")
         self._size += 1
 
     def path_to(self, nodeid):
@@ -73,23 +87,28 @@ class BST:
         self._root.path_to(nodeid, path)
         return path
 
+    def print(self):
+        return self._root.print("")
+
 class Explorer:
-    def __init__(self, initial_state):
-        self._head = initial_state
-        self._head_len = len(initial_state)
-        self._head_slen = slen(initial_state)
+    def __init__(self, initial_state=None):
+        if initial_state != None:
+            self.update_head(initial_state)
 
         self._nodeid_cache = set()
 
         # Initialize BST to cache all paths walked through so far.
-        self._cur_nodeid = self._new_nodeid()
-        root_node = Node(self._cur_nodeid, None, None, initial_state)
-        self._bst = BST(root_node)
+        # self._cur_nodeid = self._new_nodeid()
+        # root_node = Node(self._cur_nodeid, None, None, initial_state)
+        self._bst = BST()
 
     # The way we update the head is left to the users of the class. In this
     # fashion, the algorithm being run is transparent to the Explorer.
     def update_head(self, new_head):
         self._head = new_head
+        self._head_len = len(new_head)
+        self._head_slen = slen(new_head)
+
         child_nodeid = self._new_nodeid()
         self._bst.insert(child_nodeid, new_head)
         self._cur_nodeid = child_nodeid

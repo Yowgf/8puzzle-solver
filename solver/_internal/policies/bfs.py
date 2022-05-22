@@ -10,7 +10,7 @@ def bfs(initial_state, goal_state):
     frontier = [initial_state]
     explored = []
     found_goal = False
-    explorer = Explorer(initial_state)
+    explorer = Explorer()
     while len(frontier) > 0 and not found_goal:
         state = frontier.pop()
         logger.debug(f"Exploring state {state}")
