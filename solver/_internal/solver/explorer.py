@@ -21,35 +21,53 @@ class Explorer:
         return pos >= self._puzzle_len - self._puzzle_slen
     
     def valid_moves_middle(self, pos):
-        return [
-            Move(pos - 1, pos), # Left
-            Move(pos + 1, pos), # Right
-            Move(pos - self._puzzle_slen, pos), # Up
-            Move(pos + self._puzzle_slen, pos), # Down
-        ]
+        return 
     
-    def all_valid_moves(self, zero_pos):
+    def all_valid_moves(self, pos):
         valid_moves = []
         
-        if self._is_left_border(zero_pos):
-            if self._is_top_border(zero_pos):
-                valid_moves.extend([Move(1, zero_pos),
-                                    Move(self._puzzle_slen, zero_pos)])
-            elif self._is_bottom_border(zero_pos):
+        if self._is_left_border(pos):
+            if self._is_top_border(pos):
+                valid_moves.extend([Move(1, pos),
+                                    Move(self._puzzle_slen, pos)])
+            elif self._is_bottom_border(pos):
                 valid_moves.extend([
-                    Move(self._puzzle_len - 2 * self._puzzle_slen, zero_pos),
-                    Move(self._puzzle_len - self._puzzle_slen + 1, zero_pos)])
+                    Move(self._puzzle_len - 2 * self._puzzle_slen, pos),
+                    Move(self._puzzle_len - self._puzzle_slen + 1, pos)])
             else:
-                valid_moves.extend(valid_moves_middle(zero_pos))
-        elif self._is_right_border(zero_pos):
-            if self._is_top_border(zero_pos):
-                valid_moves.extend([Move(self._puzzle_slen - 2, zero_pos),
-                                    Move(self._puzzle_slen * 2 - 1, zero_pos)])
-            elif self._is_bottom_border(zero_pos):
                 valid_moves.extend([
-                    Move(self._puzzle_len - 2, zero_pos),
-                    Move(self._puzzle_len - self._puzzle_slen - 1, zero_pos)])
+                    Move(pos - self._puzzle_slen, pos),
+                    Move(pos + 1, pos),
+                    Move(pos + self._puzzle_slen, pos)])
+        elif self._is_right_border(pos):
+            if self._is_top_border(pos):
+                valid_moves.extend([Move(self._puzzle_slen - 2, pos),
+                                    Move(self._puzzle_slen * 2 - 1, pos)])
+            elif self._is_bottom_border(pos):
+                valid_moves.extend([
+                    Move(self._puzzle_len - 2, pos),
+                    Move(self._puzzle_len - self._puzzle_slen - 1, pos)])
             else:
-                valid_moves.extend(valid_moves_middle(zero_pos))
-                
+                valid_moves.extend([
+                    Move(pos - self._puzzle_slen, pos),
+                    Move(pos - 1, pos),
+                    Move(pos + self._puzzle_slen, pos)])
+        elif self._is_top_border(pos):
+                valid_moves.extend([
+                    Move(pos - 1, pos),
+                    Move(pos + 1, pos),
+                    Move(pos + self._puzzle_slen, pos)])
+        elif self._is_bottom_border(pos):
+                valid_moves.extend([
+                    Move(pos - 1, pos),
+                    Move(pos + 1, pos),
+                    Move(pos - self._puzzle_slen, pos)])
+        # Middle
+        else:
+            valid_moves.extend([
+                Move(pos - 1, pos),
+                Move(pos + 1, pos),
+                Move(pos - self._puzzle_slen, pos),
+                Move(pos + self._puzzle_slen, pos)])
+
         return valid_moves
