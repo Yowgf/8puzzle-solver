@@ -10,6 +10,7 @@ def bfs(initial_state, goal_state):
     frontier = [initial_state]
     explored = []
     found_goal = False
+    explorer = Explorer(initial_state)
     while len(frontier) > 0 and not found_goal:
         state = frontier.pop()
         logger.debug(f"Exploring state {state}")
@@ -19,11 +20,12 @@ def bfs(initial_state, goal_state):
             explored.append(state)
             if state == goal_state:
                 found_goal = True
-        explorer = Explorer(state)
+        explorer.update_head(state)
         next_states = explorer.branch()
         frontier.extend(next_states)
 
     if found_goal:
-        print("Found goal")
+        return explorer.steps_to_cur_state()
     else:
-        print("Did not find goal")
+        # Indicate failure by returning None
+        return None

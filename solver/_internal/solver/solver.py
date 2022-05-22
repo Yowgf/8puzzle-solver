@@ -8,6 +8,7 @@ from _internal.config.config import (config_option_mode_breadth_first,
                                      config_option_mode_hill_climbing)
 from _internal.policies.bfs import bfs
 from _internal.log import log
+from _internal.utils.utils import slen
 
 logger = log.logger()
 
@@ -41,7 +42,9 @@ class Solver:
         mode = self._config.mode
         policy = mode_to_policy[mode]
 
-        policy(initial_state, goal_state)
+        steps_to_goal = policy(initial_state, goal_state)
+        if self._config.print_result:
+            self._print_result(steps_to_goal)
 
     def _get_goal(self):
         goal = []
@@ -50,3 +53,17 @@ class Solver:
         # 0 is the empty slot in the puzzle
         goal.append(0)
         return goal
+
+    def _print_result(self, steps_to_goal):
+        puzzle_slen = slen(self._puzzle_entries)
+
+        for step in steps_to_goal:
+            i = 0
+            while i < puzzle_slen:
+                j = 0
+                while j < puzzle_slen:
+                    print(step[i * puzzle_slen + j], end=" ")
+                    j += 1
+                print("")
+                i += 1
+            print("")
