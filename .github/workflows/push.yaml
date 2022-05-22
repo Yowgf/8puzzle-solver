@@ -22,7 +22,7 @@ jobs:
       - name: install-dependencies
         run: |
           cat >>requirements.txt<<EOF
-          pytest==4.6.9
+          pytest==7.1.2
           EOF
           python3 -m pip install -r ./requirements.txt --user
 

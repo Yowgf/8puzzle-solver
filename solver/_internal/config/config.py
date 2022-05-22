@@ -129,7 +129,6 @@ def parse_config(args):
         )
 
     if log_level != None:
-        logger.error("Initializing log level")
         initialize_log_level(config_option_log_level, log_level)
 
     return Config(mode, puzzle_entries, print_result=print_result, debug=debug)

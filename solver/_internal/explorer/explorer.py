@@ -1,12 +1,19 @@
+from copy import copy
 from math import sqrt
 
 from .move import Move
+from ..utils.utils import list_mutation
 
 class Explorer:
     def __init__(self, puzzle):
         self._puzzle = puzzle
         self._puzzle_len = len(puzzle)
         self._puzzle_slen = int(sqrt(len(puzzle)))
+
+    def branch(self):
+        valid_moves = self._all_valid_moves(self._puzzle.index(0))
+        valid_states = self._get_valid_states(valid_moves)
+        return valid_states
 
     def _is_left_border(self, pos):
         return (pos % self._puzzle_slen) == 0
@@ -20,10 +27,7 @@ class Explorer:
     def _is_bottom_border(self, pos):
         return pos >= self._puzzle_len - self._puzzle_slen
     
-    def valid_moves_middle(self, pos):
-        return 
-    
-    def all_valid_moves(self, pos):
+    def _all_valid_moves(self, pos):
         valid_moves = []
         
         if self._is_left_border(pos):
@@ -71,3 +75,10 @@ class Explorer:
                 Move(pos + self._puzzle_slen, pos)])
 
         return valid_moves
+
+    def _get_valid_states(self, valid_moves):
+        valid_states = []
+        for move in valid_moves:
+            moved_state = list_mutation(self._puzzle, move.from_pos, move.to_pos)
+            valid_states.append(moved_state)
+        return valid_states

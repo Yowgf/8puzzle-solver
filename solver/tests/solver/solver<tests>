@@ -1,8 +1,0 @@
-  /home/yowgf/repos/8puzzle-ai-solver/solver/tests/solver:
-  total used in directory 16 available 109712280
-  drwxrwxr-x 3 yowgf yowgf 4096 מאי 21 21:29 .
-  drwxrwxr-x 4 yowgf yowgf 4096 מאי 21 21:21 ..
-  -rw-rw-r-- 1 yowgf yowgf    0 מאי 21 21:18 __init__.py
-  drwxrwxr-x 2 yowgf yowgf 4096 מאי 21 21:21 __pycache__
-  -rw-rw-r-- 1 yowgf yowgf  545 מאי 21 21:29 test_explorer.py
-  -rw-rw-r-- 1 yowgf yowgf    0 מאי 21 21:18 test_explore.py~
