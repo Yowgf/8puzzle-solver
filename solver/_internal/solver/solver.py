@@ -61,6 +61,8 @@ class Solver:
     def _print_result(self, steps_to_goal):
         puzzle_slen = slen(self._puzzle_entries)
 
+        print(f"{len(steps_to_goal)-1}", end="\n\n")
+
         for step in steps_to_goal:
             i = 0
             while i < puzzle_slen:

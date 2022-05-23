@@ -29,7 +29,8 @@ class Explorer:
     # fashion, the algorithm being run is transparent to the Explorer.
     def update_head(self, parent_state, child_state, move):
         child_state_hash = self._state_hash(child_state)
-        self._explored_states[child_state_hash] = (self._head_hash, move)
+        self._explored_states[child_state_hash] = (self._state_hash(parent_state),
+                                                   move)
         self._head = child_state
         self._head_hash = child_state_hash
 
@@ -37,24 +38,31 @@ class Explorer:
         return Move.moves_from(self._head)
 
     def steps_to_cur_state(self):
-        moves = []
-        hash_path = []
         initial_state_hash = self._state_hash(self._initial_state)
         head = self._explored_states[self._head_hash]
+        steps = [self._head]
         while head[0] != initial_state_hash:
-            moves = [head[1]] + moves
+            steps = [self._inverse_state_hash(head[0])] + steps
             head = self._explored_states[head[0]]
+        if steps != [self._initial_state]:
+            steps = [self._initial_state] + steps
 
-        steps = [self._initial_state]
-        head = self._initial_state
-        for move in moves:
-            new_head = move.mutate(head)
-            steps.append(new_head)
-            head = new_head
         return steps
 
+    def _inverse_state_hash(self, h):
+        state = []
+        s = 0
+        i = 1
+        while s < h:
+            s = (h % (10 ** i))
+            digit = s // (10 ** (i - 1))
+            state.append(digit)
+            i += 1
+        if len(state) < len(self._initial_state):
+            state.append(0)
+        return state
+
     def _state_hash(self, state):
-        m = max(state) + 2
         sticked = 0
         for i in range(len(state)):
             sticked += (10 ** i) * state[i]
