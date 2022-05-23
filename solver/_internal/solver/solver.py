@@ -43,8 +43,12 @@ class Solver:
         policy = mode_to_policy[mode]
 
         steps_to_goal = policy(initial_state, goal_state)
+        logger.debug(f"Steps to goal: {steps_to_goal}")
         if self._config.print_result:
-            self._print_result(steps_to_goal)
+            if steps_to_goal == None:
+                print("Solution not found.")
+            else:
+                self._print_result(steps_to_goal)
 
     def _get_goal(self):
         goal = []

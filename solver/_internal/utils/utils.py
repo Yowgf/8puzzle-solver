@@ -1,5 +1,4 @@
 from contextlib import contextmanager
-from copy import copy
 from math import sqrt
 import os
 import sys
@@ -19,13 +18,6 @@ def solver_run_result(status, reason=""):
 
 def between(n, left, right):
     return left <= n and n <= right
-
-def list_mutation(l, from_pos, to_pos):
-    l = copy(l)
-    temp = l[to_pos]
-    l[to_pos] = l[from_pos]
-    l[from_pos] = temp
-    return l
 
 def slen(l):
     return int(sqrt(len(l)))
