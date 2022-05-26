@@ -122,12 +122,12 @@ def parse_config(args):
             f"mode must be one of: {valid_modes}",
         )
 
-    # if len(puzzle_entries) != num_puzzle_entries:
-    #     raise InvalidConfigError(
-    #         "puzzle entries",
-    #         f"wrong number of entries: expected {num_puzzle_entries} "+
-    #         f"got {len(puzzle_entries)}",
-    #     )
+    if len(puzzle_entries) != num_puzzle_entries:
+        raise InvalidConfigError(
+            "puzzle entries",
+            f"wrong number of entries: expected {num_puzzle_entries} "+
+            f"got {len(puzzle_entries)}",
+        )
 
     if log_level != None:
         initialize_log_level(config_option_log_level, log_level)

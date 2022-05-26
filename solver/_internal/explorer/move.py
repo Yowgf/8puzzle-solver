@@ -1,6 +1,5 @@
-from copy import copy
-
 from ..utils.utils import slen
+from ..utils.utils import swap
 
 class Move:
     def __init__(self, from_pos, to_pos):
@@ -8,15 +7,11 @@ class Move:
         self.to_pos = to_pos
 
     def mutate(self, l):
-        l = copy(l)
-        temp = l[self.to_pos]
-        l[self.to_pos] = l[self.from_pos]
-        l[self.from_pos] = temp
-        return l
+        return swap(self.from_pos, self.to_pos)
     
     def moves_from(origin):
         moves = []
-        
+
         pos = origin.index(0)
         origin_len = len(origin)
         origin_slen = slen(origin)

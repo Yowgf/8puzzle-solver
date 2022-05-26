@@ -7,6 +7,7 @@ from _internal.config.config import (config_option_mode_breadth_first,
                                      config_option_mode_greedy,
                                      config_option_mode_hill_climbing)
 from _internal.policies.bfs import bfs
+from _internal.policies.ids import ids
 from _internal.log import log
 from _internal.utils.utils import slen
 
@@ -14,7 +15,7 @@ logger = log.logger()
 
 mode_to_policy = {
     config_option_mode_breadth_first: bfs,
-    config_option_mode_iterative_deepening: None,
+    config_option_mode_iterative_deepening: ids,
     config_option_mode_uniform_cost: None,
     config_option_mode_astar: None,
     config_option_mode_greedy: None,

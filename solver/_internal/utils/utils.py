@@ -1,4 +1,5 @@
 from contextlib import contextmanager
+from copy import copy
 from math import sqrt
 import os
 import sys
@@ -21,6 +22,13 @@ def between(n, left, right):
 
 def slen(l):
     return int(sqrt(len(l)))
+
+def swap(l, from_pos, to_pos):
+    l = copy(l)
+    temp = l[to_pos]
+    l[to_pos] = l[from_pos]
+    l[from_pos] = temp
+    return l
 
 @contextmanager
 def suppress_output():
