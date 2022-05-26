@@ -1,6 +1,6 @@
-from _internal.explorer.explorer import Explorer
-from _internal.log import log
-from _internal.explorer.move import Move
+from ..explorer.explorer import Explorer
+from ..log import log
+from ..explorer.move import Move
 
 logger = log.logger()
 
