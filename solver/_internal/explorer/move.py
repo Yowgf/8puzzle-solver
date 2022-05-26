@@ -7,7 +7,7 @@ class Move:
         self.to_pos = to_pos
 
     def mutate(self, l):
-        return swap(self.from_pos, self.to_pos)
+        return swap(l, self.from_pos, self.to_pos)
     
     def moves_from(origin):
         moves = []
