@@ -18,7 +18,7 @@ def ordered_puzzles(ordered_puzzle):
     return puzzles
 
 @pytest.fixture
-def puzzles():
+def real_puzzles():
     # Puzzles + minimum number of steps to complete it
     puzzles_solution = {
         [1, 2, 3,
