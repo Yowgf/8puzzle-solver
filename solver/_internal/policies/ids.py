@@ -1,6 +1,8 @@
+from _internal.datastruct.stack import Stack
 from _internal.explorer.explorer import Explorer
-from _internal.log import log
 from _internal.explorer.move import Move
+from _internal.explorer.expansion import Expansion
+from _internal.log import log
 
 logger = log.logger()
 
@@ -15,7 +17,7 @@ def ids(initial_state, goal_state):
         return (cur_level+1) % depth_iteration == 0
 
     frontier = Stack()
-    frontier.push((initial_state, Move.moves_from(initial_state)))
+    frontier.push(Expansion(initial_state, Move.moves_from(initial_state)))
     next_frontier = Stack()
     explorer = Explorer(initial_state)
     depth_iteration = 2
@@ -23,21 +25,21 @@ def ids(initial_state, goal_state):
     cur_level = 0
     while not found_goal and (len(frontier) > 0 or len(next_frontier) > 0):
 
-        state, moves = frontier.pop()
+        expansion = frontier.pop()
 
-        for move in moves:
-            next_state, next_moves, state_new = (
-                explorer.update_head_and_branch(state, move))
+        for move in expansion.moves:
+            expanded, state_new = explorer.update_head_and_branch(
+                expansion.parent_state, move)
             if not state_new:
                 continue
-            if next_state == goal_state:
+            if expanded.parent_state == goal_state:
                 found_goal = True
                 break
 
             if should_reset(depth_iteration, cur_level):
-                next_frontier.push((next_state, next_moves))
+                next_frontier.push(expanded)
             else:
-                frontier.push((next_state, next_moves))
+                frontier.push(expanded)
 
         if len(frontier) <= 0:
             frontier = next_frontier

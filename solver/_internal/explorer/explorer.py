@@ -1,6 +1,7 @@
 from random import randint
 
 from ..log import log
+from .expansion import Expansion
 from .move import Move
 from ..utils.utils import slen
 from ..utils.state import state_hash
@@ -51,15 +52,15 @@ class Explorer:
 
         return steps
 
-    def update_head_and_branch(self, state, move):
+    def update_head_and_branch(self, parent_state, move):
         state_new = True
 
-        next_state = move.mutate(state)
-        if not self.is_state_new(next_state):
+        child_state = move.mutate(parent_state)
+        if not self.is_state_new(child_state):
             state_new = False
-            return None, None, state_new
+            return None, state_new
 
-        self.update_head(state, next_state, move)
+        self.update_head(parent_state, child_state, move)
         next_moves = self.branch()
 
-        return next_state, next_moves, state_new
+        return Expansion(child_state, next_moves), state_new
