@@ -1,8 +1,8 @@
-from _internal.datastruct.stack import Stack
-from _internal.explorer.explorer import Explorer
-from _internal.explorer.move import Move
-from _internal.explorer.expansion import Expansion
-from _internal.log import log
+from ..datastruct.stack import Stack
+from ..explorer.explorer import Explorer
+from ..explorer.move import Move
+from ..explorer.expansion import Expansion
+from ..log import log
 
 logger = log.logger()
 

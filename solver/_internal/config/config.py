@@ -1,9 +1,9 @@
 import logging
 
-from _internal.utils.utils import file_exists
-from _internal.utils.utils import between
-from _internal.log import log
-from _internal.log.log import set_level
+from ..utils.utils import file_exists
+from ..utils.utils import between
+from ..log import log
+from ..log.log import set_level
 
 logger = log.logger()
 
