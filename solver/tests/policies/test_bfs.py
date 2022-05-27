@@ -12,7 +12,7 @@ class TestBfs:
         assert len(solution) == 3
 
     def test_bfs_complete(self, real_puzzles, goal_state):
-        # Run 10 hardest tests and see if bfs at least finds a solution
+        # Check if bfs at least finds a valid solution for each puzzle
         puzzles_to_test = real_puzzles
         for i in range(len(puzzles_to_test)):
             puzzle = puzzles_to_test[i]

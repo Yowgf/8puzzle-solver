@@ -4,7 +4,6 @@ from _internal.explorer.move import Move
 
 logger = log.logger()
 
-
 def ids(initial_state, goal_state):
     logger.info("Starting BFS run")
     
@@ -15,34 +14,34 @@ def ids(initial_state, goal_state):
     def should_reset(depth_iteration, cur_level):
         return (cur_level+1) % depth_iteration == 0
 
-    frontier = [(initial_state, Move.moves_from(initial_state))]
-    next_frontier = []
+    frontier = Stack()
+    frontier.push((initial_state, Move.moves_from(initial_state)))
+    next_frontier = Stack()
     explorer = Explorer(initial_state)
     depth_iteration = 2
-    levels 
+    levels = "TODO"
     cur_level = 0
     while not found_goal and (len(frontier) > 0 or len(next_frontier) > 0):
 
         state, moves = frontier.pop()
 
         for move in moves:
-            next_state = move.mutate(state)
-            if not explorer.is_state_new(next_state):
+            next_state, next_moves, state_new = (
+                explorer.update_head_and_branch(state, move))
+            if not state_new:
                 continue
-            explorer.update_head(state, next_state, move)
             if next_state == goal_state:
                 found_goal = True
                 break
-            next_moves = explorer.branch()
 
             if should_reset(depth_iteration, cur_level):
-                next_frontier.append((next_state, next_moves))
+                next_frontier.push((next_state, next_moves))
             else:
-                frontier.append((next_state, next_moves))
+                frontier.push((next_state, next_moves))
 
         if len(frontier) <= 0:
             frontier = next_frontier
-            next_frontier = []
+            next_frontier = Stack()
 
     if found_goal:
         logger.info("Finished IDS run. Found goal.")

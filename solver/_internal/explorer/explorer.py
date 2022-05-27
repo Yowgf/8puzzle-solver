@@ -41,6 +41,7 @@ class Explorer:
     def steps_to_cur_state(self):
         initial_state_hash = state_hash(self._initial_state)
         head = self._explored_states[self._head_hash]
+
         steps = [self._head]
         while head[0] != initial_state_hash:
             steps = [inverse_state_hash(head[0])] + steps
@@ -50,9 +51,15 @@ class Explorer:
 
         return steps
 
-    def _get_valid_states(self, valid_moves):
-        valid_states = []
-        for move in valid_moves:
-            moved_state = move.mutate(self._head)
-            valid_states.append(moved_state)
-        return valid_states
+    def update_head_and_branch(self, state, move):
+        state_new = True
+
+        next_state = move.mutate(state)
+        if not self.is_state_new(next_state):
+            state_new = False
+            return None, None, state_new
+
+        self.update_head(state, next_state, move)
+        next_moves = self.branch()
+
+        return next_state, next_moves, state_new
