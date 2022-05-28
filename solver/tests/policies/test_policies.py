@@ -24,7 +24,7 @@ class TestPolicies:
             solution = policy.policyFunc(ordered_puzzles[-3], goal_state)
             assert len(solution) == 3, policy_name
             
-    def test_is_complete(self, real_puzzles, goal_state):
+    def test_real(self, real_puzzles, goal_state):
         for policy_name in EXPECTED_POLICY_ATTRIBUTES:
             policy = EXPECTED_POLICY_ATTRIBUTES[policy_name]
             # TODO: remove this check when all policies are implemented.
@@ -39,4 +39,7 @@ class TestPolicies:
                 puzzle = puzzles_to_test[i]
                 solution = policy.policyFunc(puzzle, goal_state)
                 assert solution != None, policy_name
-                assert len(solution) >= i, policy_name
+                if policy.optimal:
+                    assert len(solution) == i, policy_name
+                else:
+                    assert len(solution) >= i, policy_name
