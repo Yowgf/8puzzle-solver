@@ -7,6 +7,8 @@ from ..config.config import (config_option_mode_breadth_first,
 from .bfs import bfs
 from .ids import ids
 from .dijkstra import dijkstra
+from .astar import astar
+from .greedy import greedy
 
 class ExpectedAttributes:
     def __init__(self, policyFunc, complete, optimal):
@@ -18,8 +20,8 @@ MODE_TO_POLICY = {
     config_option_mode_breadth_first:       bfs,
     config_option_mode_iterative_deepening: ids,
     config_option_mode_uniform_cost:        dijkstra,
-    config_option_mode_astar:               None,
-    config_option_mode_greedy:              None,
+    config_option_mode_astar:               astar,
+    config_option_mode_greedy:              greedy,
     config_option_mode_hill_climbing:       None,
 }
 
@@ -27,7 +29,7 @@ EXPECTED_POLICY_ATTRIBUTES = {
     config_option_mode_breadth_first:       ExpectedAttributes(bfs, True, False),
     config_option_mode_iterative_deepening: ExpectedAttributes(ids, True, False),
     config_option_mode_uniform_cost:        ExpectedAttributes(dijkstra, True, True),
-    config_option_mode_astar:               None,
-    config_option_mode_greedy:              None,
+    config_option_mode_astar:               ExpectedAttributes(astar, True, True),
+    config_option_mode_greedy:              ExpectedAttributes(astar, True, True),
     config_option_mode_hill_climbing:       None,
 }

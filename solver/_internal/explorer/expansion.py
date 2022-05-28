@@ -12,5 +12,6 @@ class Expansion:
         self.parent_state = parent_state
         self.moves = moves
 
+    # Arbitrary comparison choise for use in Heap-based algorithms.
     def __lt__(self, other):
         return self
