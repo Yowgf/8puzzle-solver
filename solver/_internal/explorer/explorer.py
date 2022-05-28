@@ -13,13 +13,10 @@ logger = log.logger()
 class Explorer:
     def __init__(self, initial_state):
         self._initial_state = initial_state
-        self._head = initial_state
-        self._head_hash = state_hash(initial_state)
 
-        # Map state hash -> (parent, movement)
-        self._explored_states = {
-            self._head_hash: State(state_hash(initial_state), None, 0),
-        }
+        # Map state hash -> State object
+        self._explored_states = {}
+        self.register_state(initial_state, None, None)
 
     def is_state_new(self, state):
         stateh = state_hash(state)
@@ -33,19 +30,15 @@ class Explorer:
         assert stateh in self._explored_states
         return self._explored_states[stateh].depth
 
-    # The way we update the head is left to the users of the class. In this
-    # fashion, the algorithm being run is transparent to the Explorer.
-    def update_head(self, parent_state, child_state, move):
-        child_state_hash = state_hash(child_state)
-        self._explored_states[child_state_hash] = State(
-            state_hash(parent_state), move, 0)
-        self._head = child_state
-        self._head_hash = child_state_hash
+    def register_state(self, state, parent_state, move):
+        stateh = state_hash(state)
+        if parent_state == None:
+            self._explored_states[stateh] = State(stateh, move, 0)
+        else:
+            self._explored_states[stateh] = State(state_hash(parent_state),
+                                                  move, 0)
 
-    def branch(self):
-        return Move.moves_from(self._head)
-
-    def update_head_and_branch(self, parent_state, move):
+    def expand(self, parent_state, move):
         state_new = True
 
         child_state = move.mutate(parent_state)
@@ -53,16 +46,18 @@ class Explorer:
             state_new = False
             return None, state_new
 
-        self.update_head(parent_state, child_state, move)
-        next_moves = self.branch()
+        self.register_state(child_state, parent_state, move)
+        next_moves = Move.moves_from(child_state)
 
         return Expansion(child_state, next_moves), state_new
 
-    def steps_to_cur_state(self):
-        initial_state_hash = state_hash(self._initial_state)
-        head = self._explored_states[self._head_hash]
+    def steps_to_state(self, state):
+        stateh = state_hash(state)
 
-        steps = [self._head]
+        initial_state_hash = state_hash(self._initial_state)
+        head = self._explored_states[stateh]
+
+        steps = [state]
         while head.parent_id != initial_state_hash:
             steps = [inverse_state_hash(head.parent_id)] + steps
             head = self._explored_states[head.parent_id]

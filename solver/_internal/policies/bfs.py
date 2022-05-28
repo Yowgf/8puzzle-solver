@@ -20,8 +20,7 @@ def bfs(initial_state, goal_state):
         expansion = frontier.pop()
 
         for move in expansion.moves:
-            expanded, state_new = explorer.update_head_and_branch(
-                expansion.parent_state, move)
+            expanded, state_new = explorer.expand(expansion.parent_state, move)
             if not state_new:
                 continue
             if expanded.parent_state == goal_state:
@@ -31,7 +30,7 @@ def bfs(initial_state, goal_state):
 
     if found_goal:
         logger.info("Finished BFS run. Found goal.")
-        return explorer.steps_to_cur_state()
+        return explorer.steps_to_state(goal_state)
     else:
         logger.info("Finished BFS run. Did not find goal.")
         return None
