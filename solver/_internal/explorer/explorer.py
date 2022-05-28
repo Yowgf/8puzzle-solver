@@ -27,16 +27,17 @@ class Explorer:
 
     def state_depth(self, state):
         stateh = state_hash(state)
-        assert stateh in self._explored_states
         return self._explored_states[stateh].depth
 
     def register_state(self, state, parent_state, move):
         stateh = state_hash(state)
         if parent_state == None:
             self._explored_states[stateh] = State(stateh, move, 0)
-        else:
-            self._explored_states[stateh] = State(state_hash(parent_state),
-                                                  move, 0)
+            return
+
+        parent_stateh = state_hash(parent_state)
+        ps = self._explored_states[parent_stateh]
+        self._explored_states[stateh] = State(parent_stateh, move, ps.depth+1)
 
     def expand(self, parent_state, move):
         state_new = True

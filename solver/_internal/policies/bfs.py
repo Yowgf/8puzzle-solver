@@ -6,7 +6,7 @@ from ..datastruct.queue import Queue
 
 logger = log.logger()
 
-def bfs(initial_state, goal_state):
+def bfs(initial_state, goal_state, test_explorer=None):
     logger.info("Starting BFS run.")
 
     found_goal = False
@@ -15,7 +15,13 @@ def bfs(initial_state, goal_state):
 
     frontier = Queue()
     frontier.push(Expansion(initial_state, Move.moves_from(initial_state)))
-    explorer = Explorer(initial_state)
+
+    if test_explorer == None:
+        explorer = Explorer(initial_state)
+    else:
+        # test_explorer is used only for testing purposes
+        explorer = test_explorer
+
     while len(frontier) > 0 and not found_goal:
         expansion = frontier.pop()
 

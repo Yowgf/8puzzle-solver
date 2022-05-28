@@ -30,6 +30,8 @@ class TestPolicies:
             # TODO: remove this check when all policies are implemented.
             if policy == None:
                 continue
+            if not policy.complete:
+                continue
 
             # Check if policy at least finds a valid solution for each puzzle
             puzzles_to_test = real_puzzles

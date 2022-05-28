@@ -13,45 +13,46 @@ def _frontiers_empty(frontiers):
     return True
 
 def ids(initial_state, goal_state):
-    logger.info("Starting BFS run")
+    logger.info("Starting IDS run")
     
     found_goal = False
     if initial_state == goal_state:
         found_goal = True
 
-    start_frontier = Stack()
-    start_frontier.push(Expansion(initial_state, Move.moves_from(initial_state)))
     explorer = Explorer(initial_state)
 
-    # Initializer frontiers
     deepening_rate = 3
+    cur_level = 0
     assert deepening_rate > 0
-    # One for each level we can look further into
-    frontiers = [start_frontier]
-    for _ in range(deepening_rate-1):
-        frontiers.append(Stack())
+    frontier = Stack()
+    frontier.push(Expansion(initial_state, Move.moves_from(initial_state)))
+    next_frontier = Stack()
 
-    # while not found_goal and not _frontiers_empty(frontiers):
-    #     # Loops through different levels in a circular fashion
-    #     for level in range(deepening_rate):
-    #         frontier = frontiers[level]
-
-    #         expansion = frontier.pop()
-    #         def dfs(expansion):
-    #             expanded, state_new = explorer.update_head_and_branch(
-    #                 expansion.parent_state, move)
-    #             if not state_new:
-    #                 continue
-    #             if expanded.parent_state == goal_state:
-    #                 found_goal = True
-    #                 break
+    while not found_goal and (len(frontier) > 0 or len(next_frontier) > 0):
+        while len(frontier) > 0:
+            expansion = frontier.pop()
+            parent_state = expansion.parent_state
+            state_depth = explorer.state_depth(parent_state)
+            for move in expansion.moves:
+                expanded, state_new = explorer.expand(parent_state, move)
+                if not state_new:
+                    continue
+                if expanded.parent_state == goal_state:
+                    found_goal = True
+                    break
                 
-    #             frontiers[(level+1)%deepening_rate].push(expanded)
+                if state_depth + 1 < cur_level + deepening_rate:
+                    frontier.push(expanded)
+                else:
+                    next_frontier.push(expanded)
 
+        frontier = next_frontier
+        next_frontier = Stack()
+        cur_level += deepening_rate
 
     if found_goal:
         logger.info("Finished IDS run. Found goal.")
-        return explorer.steps_to_cur_state()
+        return explorer.steps_to_state(goal_state)
     else:
         logger.info("Finished IDS run. Did not find goal.")
         return None

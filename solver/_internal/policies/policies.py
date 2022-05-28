@@ -24,7 +24,7 @@ MODE_TO_POLICY = {
 
 EXPECTED_POLICY_ATTRIBUTES = {
     config_option_mode_breadth_first:       ExpectedAttributes(bfs, True, False),
-    config_option_mode_iterative_deepening: None, #ExpectedAttributes(ids, True, False),
+    config_option_mode_iterative_deepening: ExpectedAttributes(ids, True, False),
     config_option_mode_uniform_cost:        None,
     config_option_mode_astar:               None,
     config_option_mode_greedy:              None,
