@@ -1,16 +1,10 @@
 from ..datastruct.stack import Stack
+from ..explorer.expansion import Expansion
 from ..explorer.explorer import Explorer
 from ..explorer.move import Move
-from ..explorer.expansion import Expansion
 from ..log import log
 
 logger = log.logger()
-
-def _frontiers_empty(frontiers):
-    for frontier in frontiers:
-        if len(frontier) > 0:
-            return False
-    return True
 
 def ids(initial_state, goal_state):
     logger.info("Starting IDS run")
