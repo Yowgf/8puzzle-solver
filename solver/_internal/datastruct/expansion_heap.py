@@ -10,6 +10,6 @@ class ExpansionHeap:
     def pop(self):
         return heapq.heappop(self._l)
 
-    # Order by depth
-    def push(self, depth, expansion):
-        return heapq.heappush(self._l, (depth, expansion))
+    # Order by cost
+    def push(self, cost, expansion):
+        return heapq.heappush(self._l, (cost, expansion))
