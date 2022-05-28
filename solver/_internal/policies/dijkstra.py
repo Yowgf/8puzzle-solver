@@ -1,6 +1,6 @@
-from ..datastruct.heap import Heap
 from ..explorer.expansion import Expansion
 from ..explorer.explorer import Explorer
+from ..datastruct.expansion_heap import ExpansionHeap
 from ..explorer.move import Move
 from ..log import log
 
@@ -16,13 +16,22 @@ def dijkstra(initial_state, goal_state):
 
     explorer = Explorer(initial_state)
 
-    frontier = Heap()
-    frontier.push(Expansion(initial_state, Move.moves_from(initial_state)))
+    frontier = ExpansionHeap()
+    frontier.push(0, Expansion(initial_state, Move.moves_from(initial_state)))
 
     while not found_goal and len(frontier) > 0:
-        expansion = frontier.pop()
-
+        _, expansion = frontier.pop()
         
+        for move in expansion.moves:
+            expanded, state_new = explorer.expand(expansion.parent_state, move)
+            if not state_new:
+                continue
+            if expanded.parent_state == goal_state:
+                found_goal = True
+                break
+
+            depth = explorer.state_depth(expanded.parent_state)
+            frontier.push(depth, expanded)
 
     if found_goal:
         logger.info("Finished Dijkstra run. Found goal.")

@@ -40,6 +40,6 @@ class TestPolicies:
                 solution = policy.policyFunc(puzzle, goal_state)
                 assert solution != None, policy_name
                 if policy.optimal:
-                    assert len(solution) == i, policy_name
+                    assert len(solution)-1 == i, policy_name
                 else:
                     assert len(solution) >= i, policy_name

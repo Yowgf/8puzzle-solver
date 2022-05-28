@@ -11,3 +11,6 @@ class Expansion:
     def __init__(self, parent_state, moves):
         self.parent_state = parent_state
         self.moves = moves
+
+    def __lt__(self, other):
+        return self
