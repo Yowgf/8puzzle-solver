@@ -7,6 +7,12 @@ from ..log.log import set_level
 
 logger = log.logger()
 
+# These are the additional modes available so that different heuristics may be
+# tested.
+config_option_mode_astar_manhattan = 'AM'
+config_option_mode_astar_displaced = 'AD'
+config_option_mode_greedy_manhattan = 'GM'
+config_option_mode_greedy_displaced = 'GD'
 
 # These options are required in the assignment specification.
 config_option_mode_breadth_first = 'B'
@@ -15,12 +21,20 @@ config_option_mode_uniform_cost = 'U'
 config_option_mode_astar = 'A'
 config_option_mode_greedy = 'G'
 config_option_mode_hill_climbing = 'H'
-valid_modes = [config_option_mode_breadth_first,
-               config_option_mode_iterative_deepening,
-               config_option_mode_uniform_cost,
-               config_option_mode_astar,
-               config_option_mode_greedy,
-               config_option_mode_hill_climbing,
+valid_modes = [
+    # Required
+    config_option_mode_breadth_first,
+    config_option_mode_iterative_deepening,
+    config_option_mode_uniform_cost,
+    config_option_mode_astar,
+    config_option_mode_greedy,
+    config_option_mode_hill_climbing,
+
+    # Additional
+    config_option_mode_astar_manhattan,
+    config_option_mode_astar_displaced,
+    config_option_mode_greedy_manhattan,
+    config_option_mode_greedy_displaced,      
 ]
 config_option_print_result = "PRINT"
 
