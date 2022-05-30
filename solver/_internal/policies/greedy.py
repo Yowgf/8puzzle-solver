@@ -4,6 +4,7 @@ from ..explorer.explorer import Explorer
 from ..explorer.move import Move
 from .heuristics import manhattan_distance
 from ..log import log
+from .utils import algorithm_results
 
 logger = log.logger()
 
@@ -33,9 +34,5 @@ def greedy(initial_state, goal_state, heuristic=manhattan_distance):
             heuristic_cost = heuristic(expanded.parent_state)
             frontier.push(heuristic_cost, expanded)
 
-    if found_goal:
-        logger.info("Finished Greedy Search run. Found goal.")
-        return explorer.steps_to_state(goal_state)
-    else:
-        logger.info("Finished Greedy Search run. Did not find goal.")
-        return None
+    return algorithm_results(logger, 'Greedy Search', explorer, found_goal,
+                             goal_state)

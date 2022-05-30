@@ -38,6 +38,11 @@ valid_modes = [
 ]
 config_option_print_result = "PRINT"
 
+# Additional options (not required in the assignment specification)
+config_option_debug = '-d'
+config_option_log_level = '-log-level'
+config_option_print_statistics = 'PRINT_STATISTICS'
+
 class InvalidConfigError(Exception):
     def __init__(self, config_option_key, err_msg):
         super().__init__(
@@ -50,10 +55,11 @@ class Config:
     puzzle_entries_key = 'puzzle_entries'
     debug_key = 'debug'
 
-    def __init__(self, mode, puzzle_entries, print_result=False, debug=False):
+    def __init__(self, mode, puzzle_entries, print_result=False, print_statistics=False, debug=False):
         self.mode = mode
         self.puzzle_entries = puzzle_entries
         self.print_result = print_result
+        self.print_statistics = print_statistics
         self.debug = debug
 
     def to_json(self):
@@ -65,6 +71,7 @@ class Config:
             json_mapping("mode", self.mode) + ",\n" +
             json_mapping("puzzle_entries", self.puzzle_entries) + ",\n" +
             json_mapping("print_result", self.print_result) + ",\n" +
+            json_mapping("print_statistics", self.print_statistics) + ",\n" +
             json_mapping("debug", self.debug) +
             '\n}'
         )
@@ -91,16 +98,13 @@ def initialize_log_level(log_level_config_key, log_level):
         raise InvalidConfigError(log_level_config_key, e)
 
 def parse_config(args):
-    # These are NOT required in the assignment specification.
-    config_option_debug = '-d'
-    config_option_log_level = '-log-level'
-
     # Must receive exactly this many entries, otherwise config is invalid.
     num_puzzle_entries = 9
     # Start with empty list for entries.
     mode = None
     puzzle_entries = []
     print_result = False
+    print_statistics = False
 
     # Non-required flags
     debug = False
@@ -117,6 +121,8 @@ def parse_config(args):
             log_level = get_eqseparated_val(config_option_log_level, arg)
         elif arg == config_option_print_result:
             print_result = True
+        elif arg == config_option_print_statistics:
+            print_statistics = True
         elif arg in valid_modes:
             mode = arg
         elif len(puzzle_entries) < num_puzzle_entries:
@@ -146,4 +152,5 @@ def parse_config(args):
     if log_level != None:
         initialize_log_level(config_option_log_level, log_level)
 
-    return Config(mode, puzzle_entries, print_result=print_result, debug=debug)
+    return Config(mode, puzzle_entries, print_result=print_result,
+                  print_statistics=print_statistics, debug=debug)

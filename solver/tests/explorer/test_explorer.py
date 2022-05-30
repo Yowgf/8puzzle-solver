@@ -10,6 +10,6 @@ class TestExplorer:
     def test_state_depth_depth2(self, ordered_puzzles, goal_state):
         initial_state = ordered_puzzles[-3]
         explorer = Explorer(initial_state)
-        solution = bfs(initial_state, goal_state, test_explorer=explorer)
+        solution, _ = bfs(initial_state, goal_state, test_explorer=explorer)
         assert len(solution) == 3
         assert explorer.state_depth(goal_state) == 2

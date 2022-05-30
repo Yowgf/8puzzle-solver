@@ -3,6 +3,7 @@ from ..explorer.expansion import Expansion
 from ..explorer.explorer import Explorer
 from ..explorer.move import Move
 from ..log import log
+from .utils import algorithm_results
 
 logger = log.logger()
 
@@ -44,9 +45,4 @@ def ids(initial_state, goal_state):
         next_frontier = Stack()
         cur_level += deepening_rate
 
-    if found_goal:
-        logger.info("Finished IDS run. Found goal.")
-        return explorer.steps_to_state(goal_state)
-    else:
-        logger.info("Finished IDS run. Did not find goal.")
-        return None
+    return algorithm_results(logger, 'IDS', explorer, found_goal, goal_state)

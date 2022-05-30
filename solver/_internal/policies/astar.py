@@ -4,6 +4,7 @@ from ..explorer.explorer import Explorer
 from ..explorer.move import Move
 from .heuristics import manhattan_distance
 from ..log import log
+from .utils import algorithm_results
 
 logger = log.logger()
 
@@ -35,9 +36,4 @@ def astar(initial_state, goal_state, heuristic=manhattan_distance):
             cost = depth + heuristic_cost
             frontier.push(cost, expanded)
 
-    if found_goal:
-        logger.info("Finished A* run. Found goal.")
-        return explorer.steps_to_state(goal_state)
-    else:
-        logger.info("Finished A* run. Did not find goal.")
-        return None
+    return algorithm_results(logger, 'A*', explorer, found_goal, goal_state)

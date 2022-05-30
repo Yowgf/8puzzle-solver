@@ -3,6 +3,7 @@ from ..log import log
 from ..explorer.expansion import Expansion
 from ..explorer.move import Move
 from ..datastruct.queue import Queue
+from .utils import algorithm_results
 
 logger = log.logger()
 
@@ -34,9 +35,4 @@ def bfs(initial_state, goal_state, test_explorer=None):
                 break
             frontier.push(expanded)
 
-    if found_goal:
-        logger.info("Finished BFS run. Found goal.")
-        return explorer.steps_to_state(goal_state)
-    else:
-        logger.info("Finished BFS run. Did not find goal.")
-        return None
+    return algorithm_results(logger, 'BFS', explorer, found_goal, goal_state)

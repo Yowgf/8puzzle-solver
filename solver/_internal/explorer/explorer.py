@@ -4,6 +4,7 @@ from ..log import log
 from .expansion import Expansion
 from .move import Move
 from .state import State
+from .statistics import Statistics
 from ..utils.utils import slen
 from ..utils.state import state_hash
 from ..utils.state import inverse_state_hash
@@ -51,6 +52,9 @@ class Explorer:
         next_moves = Move.moves_from(child_state)
 
         return Expansion(child_state, next_moves), state_new
+
+    def statistics(self):
+        return Statistics(num_expanded_states=len(self._explored_states))
 
     def steps_to_state(self, state):
         stateh = state_hash(state)

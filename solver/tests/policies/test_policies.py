@@ -9,7 +9,7 @@ class TestPolicies:
             # TODO: remove this check when all policies are implemented.
             if policy == None:
                 continue
-            solution = policy.policyFunc(goal_state, goal_state)
+            solution, _ = policy.policyFunc(goal_state, goal_state)
             assert len(solution) == 1, policy_name
 
     def test_almost_trivial(self, ordered_puzzles, goal_state):
@@ -19,9 +19,9 @@ class TestPolicies:
             if policy == None:
                 continue
 
-            solution = policy.policyFunc(ordered_puzzles[-2], goal_state)
+            solution, _ = policy.policyFunc(ordered_puzzles[-2], goal_state)
             assert len(solution) == 2, policy_name
-            solution = policy.policyFunc(ordered_puzzles[-3], goal_state)
+            solution, _ = policy.policyFunc(ordered_puzzles[-3], goal_state)
             assert len(solution) == 3, policy_name
             
     def test_real(self, real_puzzles, goal_state):
@@ -37,7 +37,7 @@ class TestPolicies:
             puzzles_to_test = real_puzzles
             for i in range(len(puzzles_to_test)):
                 puzzle = puzzles_to_test[i]
-                solution = policy.policyFunc(puzzle, goal_state)
+                solution, _ = policy.policyFunc(puzzle, goal_state)
                 assert solution != None, policy_name
                 if policy.optimal:
                     assert len(solution)-1 == i, policy_name

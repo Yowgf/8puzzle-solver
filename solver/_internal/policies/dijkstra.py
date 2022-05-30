@@ -3,6 +3,7 @@ from ..explorer.explorer import Explorer
 from ..datastruct.expansion_heap import ExpansionHeap
 from ..explorer.move import Move
 from ..log import log
+from .utils import algorithm_results
 
 logger = log.logger()
 
@@ -33,9 +34,4 @@ def dijkstra(initial_state, goal_state):
             depth = explorer.state_depth(expanded.parent_state)
             frontier.push(depth, expanded)
 
-    if found_goal:
-        logger.info("Finished Dijkstra run. Found goal.")
-        return explorer.steps_to_state(goal_state)
-    else:
-        logger.info("Finished Dijkstra run. Did not find goal.")
-        return None
+    return algorithm_results(logger, 'Dijkstra', explorer, found_goal, goal_state)

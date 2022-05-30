@@ -4,6 +4,7 @@ from ..explorer.explorer import Explorer
 from ..explorer.move import Move
 from .heuristics import manhattan_distance
 from ..log import log
+from .utils import algorithm_results
 
 logger = log.logger()
 
@@ -44,9 +45,5 @@ def hclimb(initial_state, goal_state, heuristic=manhattan_distance):
 
         frontier.push(expansion_with_best_heuristic)
 
-    if found_goal:
-        logger.info("Finished Hill Climbling run. Found goal.")
-        return explorer.steps_to_state(goal_state)
-    else:
-        logger.info("Finished Hill Climbling run. Did not find goal.")
-        return None
+    return algorithm_results(logger, 'Hill Climbing', explorer, found_goal,
+                             goal_state)
