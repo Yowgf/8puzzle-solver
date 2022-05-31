@@ -25,7 +25,7 @@ class TestPolicies:
                 continue
 
             # Check if policy at least finds a valid solution for each puzzle
-            puzzles_to_test = real_puzzles
+            puzzles_to_test = real_puzzles[:20]
             for i in range(len(puzzles_to_test)):
                 puzzle = puzzles_to_test[i]
                 solution, _ = policy.policyFunc(puzzle, goal_state)
