@@ -21,21 +21,22 @@ config_option_mode_uniform_cost = 'U'
 config_option_mode_astar = 'A'
 config_option_mode_greedy = 'G'
 config_option_mode_hill_climbing = 'H'
-valid_modes = [
-    # Required
+required_modes = [
     config_option_mode_breadth_first,
     config_option_mode_iterative_deepening,
     config_option_mode_uniform_cost,
     config_option_mode_astar,
     config_option_mode_greedy,
     config_option_mode_hill_climbing,
-
-    # Additional
+]
+additional_modes = [
     config_option_mode_astar_manhattan,
     config_option_mode_astar_displaced,
     config_option_mode_greedy_manhattan,
     config_option_mode_greedy_displaced,      
 ]
+valid_modes = [*required_modes, *additional_modes]
+
 config_option_print_result = "PRINT"
 
 # Additional options (not required in the assignment specification)

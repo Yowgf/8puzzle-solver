@@ -6,18 +6,12 @@ class TestPolicies:
     def test_trivial(self, goal_state):
         for policy_name in EXPECTED_POLICY_ATTRIBUTES:
             policy = EXPECTED_POLICY_ATTRIBUTES[policy_name]
-            # TODO: remove this check when all policies are implemented.
-            if policy == None:
-                continue
             solution, _ = policy.policyFunc(goal_state, goal_state)
             assert len(solution) == 1, policy_name
 
     def test_almost_trivial(self, ordered_puzzles, goal_state):
         for policy_name in EXPECTED_POLICY_ATTRIBUTES:
             policy = EXPECTED_POLICY_ATTRIBUTES[policy_name]
-            # TODO: remove this check when all policies are implemented.
-            if policy == None:
-                continue
 
             solution, _ = policy.policyFunc(ordered_puzzles[-2], goal_state)
             assert len(solution) == 2, policy_name
@@ -27,9 +21,6 @@ class TestPolicies:
     def test_real(self, real_puzzles, goal_state):
         for policy_name in EXPECTED_POLICY_ATTRIBUTES:
             policy = EXPECTED_POLICY_ATTRIBUTES[policy_name]
-            # TODO: remove this check when all policies are implemented.
-            if policy == None:
-                continue
             if not policy.complete:
                 continue
 
