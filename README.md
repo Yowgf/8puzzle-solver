@@ -1,4 +1,4 @@
-# 8-puzzle AI Solver
+# 8-puzzle Solver
 
 A solver for the 8-puzzle problem based on different Artificial Intelligence
 space search algorithms.
