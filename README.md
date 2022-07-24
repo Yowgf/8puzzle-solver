@@ -16,6 +16,7 @@ Available algorithms:
 - **I** - Iterative deepening
 - **U** - Uniform cost search (Dijkstra)
 - **A** - A* search
+- **H** - Hill-climbing search
 
 # Example
 
